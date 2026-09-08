@@ -1,0 +1,17 @@
+class MemoriaEstatica:
+    def __init__(self):
+        self.calificaciones = [0] * 5
+
+    def capturar_datos(self):
+        for i in range(5):
+            entrada = input("captura la calificacion: ")
+            self.calificaciones[i] = int(entrada)
+            
+    def mostrar_resultados(self):
+        print("\nLas calificaciones capturadas son:", self.calificaciones)
+
+if __name__ == "__main__":
+    programa = MemoriaEstatica()
+
+    programa.capturar_datos()
+    programa.mostrar_resultados() 
