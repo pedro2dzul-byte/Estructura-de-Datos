@@ -1,0 +1,22 @@
+class MemoriaDinamica:
+    def __init__(self):
+        self.frutas = []  
+
+    def ejecutar_operaciones(self):
+        self.frutas.append("Mango")
+        self.frutas.append("Manzana")
+        self.frutas.append("Banana")
+        self.frutas.append("Uvas")
+
+        print(self.frutas)
+
+        self.frutas.pop(0)
+        self.frutas.pop(1)
+        
+        self.frutas.append("sandia")
+        
+        print(self.frutas)
+
+if __name__ == "__main__":
+    programa = MemoriaDinamica()
+    programa.ejecutar_operaciones()
