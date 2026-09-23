@@ -1,0 +1,106 @@
+import random
+import time
+
+# ==============================================================================
+# CONFIGURACIÓN (Modifica estos valores directamente en el código)
+# ==============================================================================
+MATERIAS = ["Matemáticas", "Historia", "Ciencias", "Literatura", "Inglés", "Programación", "Física"]
+CANTIDAD_ALUMNOS = 1000  # Puedes poner 50, 500, 1000, etc.
+# ==============================================================================
+
+# Generación dinámica de datos según la configuración anterior
+alumnos = {}
+for i in range(1, CANTIDAD_ALUMNOS + 1):
+    nombre_id = f"Alumno_{i}"
+    # Se genera una calificación para cada materia
+    alumnos[nombre_id] = {materia: round(random.uniform(5.0, 10.0), 1) for materia in MATERIAS}
+
+
+def mostrar_tabla_alumnos(lista_alumnos, materias, limite=10):
+    """
+    Imprime la información en forma de tabla formateada adaptándose al ancho necesario.
+    """
+    if not lista_alumnos or not materias:
+        print("No hay datos para mostrar.")
+        return
+
+    print("\n" + "=" * 100)
+    
+    # Encabezados
+    encabezado = f"{'Alumno':<12} | " + " | ".join(f"{mat:<12}" for mat in materias)
+    print(encabezado)
+    print("-" * len(encabezado))
+    
+    # Filas
+    contador = 0
+    for alumno, notas in lista_alumnos.items():
+        if contador >= limite:
+            print(f"... y {len(lista_alumnos) - limite} alumnos más.")
+            break
+        
+        fila_notas = " | ".join(f"{notas[m]:<12.1f}" for m in materias)
+        print(f"{alumno:<12} | {fila_notas}")
+        contador += 1
+        
+    print("=" * 100)
+
+
+def buscar_calificacion(alumnos, materias):
+    """
+    Permite buscar un alumno y materia específicos dentro del diccionario.
+    """
+    print("\n--- BÚSQUEDA ESPECÍFICA ---")
+    
+    # Entrada del Alumno
+    alumno_id = input(f"Ingresa el ID del alumno (ejemplo: Alumno_1 a Alumno_{len(alumnos)}): ").strip()
+    
+    if alumno_id not in alumnos:
+        print(f"Error: El alumno '{alumno_id}' no existe.")
+        return
+
+    # Entrada de la Materia
+    print("\nMaterias disponibles:", ", ".join(materias))
+    materia_input = input("Ingresa el nombre exacto de la materia: ").strip().lower()
+    
+    # Búsqueda insensible a mayúsculas/minúsculas
+    materia_encontrada = None
+    for mat in materias:
+        if mat.lower() == materia_input:
+            materia_encontrada = mat
+            break
+
+    if not materia_encontrada:
+        print(f"Error: La materia '{materia_input}' no es válida.")
+        return
+
+    # Resultado
+    nota = alumnos[alumno_id][materia_encontrada]
+    print(f"\nResultado: La calificación de {alumno_id} en {materia_encontrada} es: {nota}")
+
+
+# --- MENÚ DE INTERACCIÓN ---
+def menu():
+    while True:
+        print(f"\n--- SISTEMA DE GESTIÓN ESCOLAR ({len(alumnos)} Alumnos, {len(MATERIAS)} Materias) ---")
+        print("1. Ver vista previa de la tabla (Primeros 10 alumnos)")
+        print(f"2. Ver la tabla completa ({len(alumnos)} alumnos)")
+        print("3. Buscar un alumno y materia en específico")
+        print("4. Salir")
+        
+        opcion = input("Selecciona una opción (1-4): ").strip()
+        
+        if opcion == "1":
+            mostrar_tabla_alumnos(alumnos, MATERIAS, limite=10)
+        elif opcion == "2":
+            mostrar_tabla_alumnos(alumnos, MATERIAS, limite=len(alumnos))
+        elif opcion == "3":
+            buscar_calificacion(alumnos, MATERIAS)
+        elif opcion == "4":
+            print("Saliendo del programa...")
+            break
+        else:
+            print("Opción inválida. Intenta nuevamente.")
+
+# Ejecutar programa
+if __name__ == "__main__":
+    menu()
