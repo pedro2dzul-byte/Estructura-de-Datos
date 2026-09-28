@@ -1,0 +1,20 @@
+import sys
+
+sys.setrecursionlimit(2000)
+
+def procesar_paquetes(paquetes, indice=0):
+    if indice == len(paquetes):
+        return "Todos los paquetes fueron procesados."
+
+    print(f"Procesando paquete #{indice + 1}")
+
+    # Llamada recursiva
+    return procesar_paquetes(paquetes, indice + 1)
+
+
+# 999 paquetes
+paquetes = list(range(500))
+
+resultado = procesar_paquetes(paquetes)
+
+print(resultado)
