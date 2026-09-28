@@ -1,0 +1,9 @@
+n = 500
+a, b = 0, 1
+fibonacci_numbers = []
+
+for _ in range(n):
+    fibonacci_numbers.append(str(a))
+    a, b = b, a + b
+
+print(" ".join(fibonacci_numbers))
