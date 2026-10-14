@@ -1,0 +1,36 @@
+import time
+
+class TorreHanoi:
+    def __init__(self, n_discos):
+        self.n_discos = n_discos
+        self.movimientos = 0
+
+    def resolver_recursivo(self, n, origen, destino, auxiliar):
+        
+        if n == 1:
+            self.movimientos += 1
+            return
+        
+        
+        self.resolver_recursivo(n - 1, origen, auxiliar, destino)
+        
+        
+        self.movimientos += 1
+        
+        
+        self.resolver_recursivo(n - 1, auxiliar, destino, origen)
+
+    def medir_tiempo(self):
+        self.movimientos = 0
+        inicio = time.perf_counter()
+        self.resolver_recursivo(self.n_discos, 'A', 'C', 'B')
+        fin = time.perf_counter()
+        return fin - inicio, self.movimientos
+
+if __name__ == "__main__":
+    discos_a_probar = [30]
+    
+    for d in discos_a_probar:
+        hanoi = TorreHanoi(d)
+        tiempo, movs = hanoi.medir_tiempo()
+        print(f"Discos: {d:2d} | Movimientos: {movs:10,d} | Tiempo: {tiempo:.6f} segundos") 
