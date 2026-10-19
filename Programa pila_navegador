@@ -1,0 +1,61 @@
+class Pila:
+    def __init__(self):
+        self.items = []
+
+    def esta_vacia(self):
+        return len(self.items) == 0
+
+    def apilar(self, item):
+        self.items.append(item)
+
+    def desapilar(self):
+        if not self.esta_vacia():
+            return self.items.pop()
+        return None
+
+    def ver_tope(self):
+        if not self.esta_vacia():
+            return self.items[-1]
+        return None
+
+class Navegador:
+    def __init__(self):
+        self.historial = Pila()
+
+    def visitar_sitio(self, url):
+        self.historial.apilar(url)
+        print(f"\n Navegando a: {url}")
+
+    def regresar(self):
+        saliente = self.historial.desapilar()
+        if saliente is None:
+            print("\n No hay páginas anteriores en el historial.")
+        else:
+            print(f"\n Saliendo de: {saliente}")
+            actual = self.historial.ver_tope()
+            if actual:
+                print(f" Página actual: {actual}")
+            else:
+                print(" El navegador está vacío.")
+
+    def mostrar_actual(self):
+        actual = self.historial.ver_tope()
+        if actual:
+            print(f"\n Estás en la página: {actual}")
+        else:
+            print("\n El navegador no tiene páginas abiertas.")
+
+if __name__ == "__main__":
+    navegador = Navegador()
+    navegador.visitar_sitio("google.com")
+    navegador.visitar_sitio("github.com")
+    navegador.visitar_sitio("python.org")
+
+    navegador.mostrar_actual()
+    print("\n*** Dando clic en 'Atrás' ***")
+    navegador.regresar()
+    
+    print("\n*** Dando clic en 'Atrás' otra vez ***")
+    navegador.regresar()
+    
+    navegador.mostrar_actual()
