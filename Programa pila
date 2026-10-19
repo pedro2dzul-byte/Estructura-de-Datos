@@ -1,0 +1,45 @@
+class Pila:
+    def __init__(self):
+        self.items = []
+
+    def esta_vacia(self):
+        return len(self.items) == 0
+
+    def apilar(self, item):
+        self.items.append(item)
+
+    def desapilar(self):
+        if not self.esta_vacia():
+            return self.items.pop()
+        return None
+
+def evaluar_posfija(expresion):
+    pila = Pila()
+    tokens = expresion.split()
+    
+    for token in tokens:
+        if token.isdigit():
+            pila.apilar(int(token))
+        else:
+            val2 = pila.desapilar()
+            val1 = pila.desapilar()
+
+            if token == '+':
+                resultado = val1 + val2
+            elif token == '-':
+                resultado = val1 - val2
+            elif token == '*':
+                resultado = val1 * val2
+            elif token == '/':
+                resultado = val1 / val2
+
+            pila.apilar(resultado)
+
+    return pila.desapilar()
+
+if __name__ == "__main__":
+    # Expresion equivalente a: (3 + 4) * 2 = 14
+    expresion_prueba = "3 4 + 2 *"
+    print(f"Expresión posfija: {expresion_prueba}")
+    resultado = evaluar_posfija(expresion_prueba)
+    print(f"El resultado es: {resultado}")
